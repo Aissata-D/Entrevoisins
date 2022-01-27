@@ -1,11 +1,13 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,26 +17,35 @@ import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
+import com.openclassrooms.entrevoisins.utils.ItemClickSupport;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
+import butterknife.OnItemClick;
+
 
 public class NeighbourFragment extends Fragment {
 
+    //TODO Aissata
+    Neighbour ActualNeighbourg;
     private NeighbourApiService mApiService;
     private List<Neighbour> mNeighbours;
     private RecyclerView mRecyclerView;
-
+    private int mPosition;
+    private ListNeighbourActivity listNeighbourActivity = new ListNeighbourActivity();
+    //FIN
 
     /**
      * Create and return a new instance
+     *
      * @return @{@link NeighbourFragment}
      */
     public static NeighbourFragment newInstance() {
         NeighbourFragment fragment = new NeighbourFragment();
+
         return fragment;
     }
 
@@ -52,6 +63,8 @@ public class NeighbourFragment extends Fragment {
         mRecyclerView = (RecyclerView) view;
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+        configureOnClickRecyclerView();
+
         return view;
     }
 
@@ -83,6 +96,7 @@ public class NeighbourFragment extends Fragment {
 
     /**
      * Fired if the user clicks on a delete button
+     *
      * @param event
      */
     @Subscribe
@@ -90,4 +104,32 @@ public class NeighbourFragment extends Fragment {
         mApiService.deleteNeighbour(event.neighbour);
         initList();
     }
+
+    //TODO Aissata
+
+    private void configureOnClickRecyclerView() {
+
+        ItemClickSupport.addTo(mRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+            @Override
+            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                // do it
+                ActualNeighbourg = mNeighbours.get(position);
+                String NameClicked = ActualNeighbourg.getName();
+                String AvatarClicked = ActualNeighbourg.getAvatarUrl();
+                mPosition = position;
+
+                Log.w("clicked", "onItemClicked: " + position + " nom: " + ActualNeighbourg.getName());
+
+                Intent neigbourgDetailsIntent = new Intent(getActivity(), NeigbourgDetails.class);
+                neigbourgDetailsIntent.putExtra("POSITION", position);
+                neigbourgDetailsIntent.putExtra("NAME_CLICKED", NameClicked);
+                neigbourgDetailsIntent.putExtra("AVATAR_CLICKED", AvatarClicked);
+                startActivity(neigbourgDetailsIntent);
+            }
+        });
+
+
+    }
+
 }
+
