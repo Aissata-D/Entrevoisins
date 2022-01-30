@@ -18,15 +18,30 @@ public class ListNeighbourPagerAdapter extends FragmentPagerAdapter {
      */
     @Override
     public Fragment getItem(int position) {
-        return NeighbourFragment.newInstance();
+        //TOdo code AISSATA
+        if (position==0) {
+
+            return NeighbourFragment.newInstance(0);
+        }
+        else if (position == 1) {
+
+
+            return NeighbourFragment.newInstance(1);
+        }
+            else {
+                return null;
+        }
+        //FIN
+
     }
 
     /**
      * get the number of pages
      * @return
      */
+    //TODO code Aissata Valeur de retour initial =1 ;valeur modifié = 2;
     @Override
     public int getCount() {
-        return 1;
+        return 2;
     }
 }
