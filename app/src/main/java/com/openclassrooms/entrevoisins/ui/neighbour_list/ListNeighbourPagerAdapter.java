@@ -19,6 +19,7 @@ public class ListNeighbourPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         //TOdo code AISSATA
+        // juste un if else
         if (position==0) {
 
             return NeighbourFragment.newInstance(0);
@@ -26,7 +27,7 @@ public class ListNeighbourPagerAdapter extends FragmentPagerAdapter {
         else if (position == 1) {
 
 
-            return FavoryFragment.newInstance();
+            return NeighbourFragment.newInstance(1);
         }
             else {
                 return null;

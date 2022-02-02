@@ -53,11 +53,11 @@ public class NeighbourFragment extends Fragment {
      *
      * @return @{@link NeighbourFragment}
      */
-    public static NeighbourFragment newInstance(int condition) {
+    public static NeighbourFragment newInstance(boolean condition) {
         NeighbourFragment fragment = new NeighbourFragment();
 //TODO AISSATA
         Bundle bundle = new Bundle();
-        bundle.putInt("CONDITION", condition);
+        bundle.putBoolean("CONDITION", condition);
         fragment.setArguments(bundle);
 
      //  mcondition = condition;

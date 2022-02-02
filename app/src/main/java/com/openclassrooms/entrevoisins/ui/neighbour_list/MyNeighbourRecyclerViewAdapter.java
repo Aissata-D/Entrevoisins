@@ -1,5 +1,6 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -86,6 +87,18 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
                 @Override
                 public void onClick(View v) {
                     EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour));
+                }
+            });
+            //Clic item
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Neighbour neighbour = mNeighbours.get(position);
+                    Intent neigbourgDetailsIntent = new Intent(getActivity(), NeigbourgDetails.class);
+                    neigbourgDetailsIntent.putExtra("POSITION", position);
+                    neigbourgDetailsIntent.putExtra("NAME_CLICKED", NameClicked);
+                    neigbourgDetailsIntent.putExtra("AVATAR_CLICKED", AvatarClicked);
+                    startActivity(neigbourgDetailsIntent);
                 }
             });
         }
