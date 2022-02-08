@@ -74,7 +74,7 @@ NeighbourFragment mFragment= new NeighbourFragment();
                                  int position) {
 
         //if (mNeighbours !=null ) {
-        this.mPosition = holder.getAdapterPosition();
+
         Neighbour neighbour = mNeighbours.get(position);
         holder.mNeighbourName.setText(neighbour.getName());
         Glide.with(holder.mNeighbourAvatar.getContext())
