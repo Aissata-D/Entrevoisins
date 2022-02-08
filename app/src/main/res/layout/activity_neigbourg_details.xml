@@ -1,45 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     tools:context=".ui.neighbour_list.NeigbourgDetails">
+    <!-- A CardView that contains a TextView -->
 
-    <ImageView
 
-        android:id="@+id/neigbourg_details_avatar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_gravity="center"
+        app:cardBackgroundColor="@color/colorPrimary"
 
-        android:layout_margin="20dp"
-        android:layout_weight="1" />
+        app:cardCornerRadius="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.075"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.08">
+
+        <ImageView
+
+            android:id="@+id/neigbourg_details_avatar"
+            android:layout_width="match_parent"
+            android:layout_height="149dp"
+            android:layout_gravity="center"
+
+
+            />
+    </android.support.v7.widget.CardView>
 
     <TextView
         android:id="@+id/neigbourg_details_name_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="20dp"
-        android:layout_weight="1"
-        android:textSize="20dp" />
 
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="56dp"
+        android:text="texview"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.467"
+        app:layout_constraintStart_toEndOf="@+id/card_view"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="135dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="40dp"
+        android:text="Clic to add to favories"
+        android:textAlignment="center"
+        android:textSize="18dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toEndOf="@+id/card_view"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/neigbourg_details_name_text" />
+
+    <ImageButton
         android:id="@+id/neigbourg_details_favory_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="20dp"
-        android:layout_marginBottom="40dp"
-        android:background="@color/design_default_color_primary"
+
+        android:background="@null"
         android:gravity="center"
-        android:text="Add to favory"
-        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/card_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:srcCompat="@drawable/ic_baseline_star_24_pink" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="217dp" />
 
 
-        />
-
-
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

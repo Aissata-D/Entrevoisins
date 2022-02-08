@@ -11,13 +11,9 @@ import com.openclassrooms.entrevoisins.model.Neighbour;
 import butterknife.BindView;
 
 public class FavoryViewHolder extends RecyclerView.ViewHolder {
-    @BindView(R.id.item_favory_fragment_textView)
-    TextView mTextView_name;
+
+
     public FavoryViewHolder(@NonNull View itemView) {
         super(itemView);
     }
-    public void updateFavoryNeigbour(Neighbour FavoryNeigbour){
-        this.mTextView_name.setText(FavoryNeigbour.getName());
-    }
-
 }

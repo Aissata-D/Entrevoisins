@@ -81,7 +81,7 @@ public class AddNeighbourActivity extends AppCompatActivity {
 
     @OnClick(R.id.create)
     void addNeighbour() {
-        Neighbour neighbour = new Neighbour(
+        Neighbour neighbour = new Neighbour(false,
                 System.currentTimeMillis(),
                 nameInput.getEditText().getText().toString(),
                 mNeighbourImage,

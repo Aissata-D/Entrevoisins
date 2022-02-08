@@ -1,6 +1,11 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 import android.content.Intent;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -25,42 +31,31 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeighbourRecyclerViewAdapter.ViewHolder> {
+public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeighbourRecyclerViewAdapter.ViewHolder> implements ListNeighbourActivity.PageSelected {
 
     private final List<Neighbour> mNeighbours;
     //TODO Code Aissata
     //  private final List<Neighbour> mNeighboursFavory;
-    int nub;
-    public List<Neighbour> mNeighboursFavory;
-    List<FavoriteNeighbours> mFavoryListe = new ArrayList<>();
 
+NeighbourFragment mFragment= new NeighbourFragment();
+    FragmentManager fm;
+    ListNeighbourPagerAdapter adapter = new ListNeighbourPagerAdapter(fm);
+    private int mPagePosition;
+    int p;
+    private Neighbour ActualNeighbourg;
+    private int mPosition;
+    private  NeighbourFragment NeighbourFragment = new NeighbourFragment();
+    private ListNeighbourActivity ListNeighbourActivity =new ListNeighbourActivity();
 
     //FIN
 
-    public MyNeighbourRecyclerViewAdapter(List<Neighbour> items, List<FavoriteNeighbours> items1) {
+    public MyNeighbourRecyclerViewAdapter(List<Neighbour> items) {
 
-        mFavoryListe = items1;
+
         mNeighbours = items;
     }
 
-  /*  public MyNeighbourRecyclerViewAdapter(List<Neighbour> items) {
 
-        mNeighbours = items;
-
-    }
-
-   public MyNeighbourRecyclerViewAdapter(List<FavoriteNeighbours> items1) {
-
-        mFavoryListe = items1;
-    }
-*/
-
-
-   // public MyNeighbourRecyclerViewAdapter(List<FavoriteNeighbours> items1) {
-
-     //   mFavoryListe = items1;
-
-    //}
 
 
     @Override
@@ -72,9 +67,13 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         return new ViewHolder(view);
     }
 
+
+
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        if (mNeighbours !=null ) {
+
+        //if (mNeighbours !=null ) {
+       position= mPosition;
             Neighbour neighbour = mNeighbours.get(position);
             holder.mNeighbourName.setText(neighbour.getName());
             Glide.with(holder.mNeighbourAvatar.getContext())
@@ -82,66 +81,82 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
                     .apply(RequestOptions.circleCropTransform())
                     .into(holder.mNeighbourAvatar);
             Log.e("TAG, ","onBindViewHolder: Aucun = if");
+            //Click on a Item of Recyclerview
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ActualNeighbourg= mNeighbours.get(mPosition);
+
+                String NameClicked = neighbour.getName();
+                String AvatarClicked = neighbour.getAvatarUrl();
+                // mPosition = position;
+
+                Log.w("clicked", "onItemClicked: " + mPosition + " nom: " + neighbour.getName());
+
+                Intent neigbourgDetailsIntent = new Intent(v.getContext(), NeigbourgDetails.class);
+                //  new Intent().setClass(this, MyDaughterActivity.class);
+                neigbourgDetailsIntent.putExtra("POSITION", mPosition);
+                neigbourgDetailsIntent.putExtra("NAME_CLICKED", NameClicked);
+                neigbourgDetailsIntent.putExtra("AVATAR_CLICKED", AvatarClicked);
+             v.getContext().startActivity(neigbourgDetailsIntent);
+
+            }
+        });
 
             holder.mDeleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour));
+                   // if( neighbour.isFavory()) {
+
+                    MyViewPager mPager = new MyViewPager();
+                       // mPager.getMp();
+                    //Log.e("TAG", "onClick: "+ mPager.getMp() );
+
+                    ListNeighbourActivity listNeighbourActivity =new ListNeighbourActivity();
+                    int e= listNeighbourActivity.mPageSelected;
+
+                    int pagenub= e;
+
+                    if( pagenub ==1) {
+                        EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour));
+                        Toast.makeText(v.getContext(),
+                                neighbour.getName() + " on est à 1 NEIGBOURS " + pagenub,
+                                Toast.LENGTH_SHORT).show();
+                        Log.e("TAG", "onClick: page "+pagenub );
+
+                    }else{
+                       // neighbour.setFavory(false);
+                        Toast.makeText(v.getContext(),
+                                neighbour.getName() + " Veuillez supprimer dans MY NEIGBOURS  "
+                                        +pagenub,
+                                Toast.LENGTH_SHORT).show();
+                        Log.e("TAG", "onClick: page "+pagenub );
+
+                    }
                 }
             });
-            //Clic item
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Neighbour neighbour = mNeighbours.get(position);
-                    Intent neigbourgDetailsIntent = new Intent(getActivity(), NeigbourgDetails.class);
-                    neigbourgDetailsIntent.putExtra("POSITION", position);
-                    neigbourgDetailsIntent.putExtra("NAME_CLICKED", NameClicked);
-                    neigbourgDetailsIntent.putExtra("AVATAR_CLICKED", AvatarClicked);
-                    startActivity(neigbourgDetailsIntent);
-                }
-            });
+
         }
 
-
-        else if (mFavoryListe !=null ) {
-            FavoriteNeighbours neighbourFavory = mFavoryListe.get(position);
-            holder.mNeighbourName.setText(neighbourFavory.getName());
-            Glide.with(holder.mNeighbourAvatar.getContext())
-                    .load(neighbourFavory.getAvatarUrl())
-                    .apply(RequestOptions.circleCropTransform())
-                    .into(holder.mNeighbourAvatar);
-
-            Log.e("TAG, ","onBindViewHolder: Aucun = else if");
-
-           /* holder.mDeleteButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    EventBus.getDefault().post(new DeleteNeighbourEvent(neighbourFavory));
-
-                }
-            });*/
-        }
-        else {
-            Log.e("TAG, ","onBindViewHolder: Aucun = else");
-        }
-    }
 
     @Override
     public int getItemCount() {
-        int taille =0;
 
-        if(mNeighbours != null){
-            taille = mNeighbours.size();
-            return taille;
-        }
-        else if (mFavoryListe !=null){
-       taille = mFavoryListe.size();
-            return taille;
-        }
-        return taille;
+    return mNeighbours.size();
     }
 
+
+
+
+    @Override
+    public int getPageSelected(int a) {
+            p = a;
+        return a;
+    }
+    public int getP(){
+        Log.e("TAGA," ,"getPagePosition: " +p );
+        return p;
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.item_list_avatar)
@@ -150,6 +165,7 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         public TextView mNeighbourName;
         @BindView(R.id.item_list_delete_button)
         public ImageButton mDeleteButton;
+
 
 
         public ViewHolder(View view) {

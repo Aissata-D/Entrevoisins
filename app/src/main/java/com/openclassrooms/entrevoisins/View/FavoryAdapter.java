@@ -33,7 +33,7 @@ public class FavoryAdapter extends RecyclerView.Adapter<FavoryViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull FavoryViewHolder viewHolder, int i) {
-        viewHolder.updateFavoryNeigbour(this.mFavoryNeigbourg.get(i));
+//        viewHolder.updateFavoryNeigbour(this.mFavoryNeigbourg.get(i));
 
     }
 

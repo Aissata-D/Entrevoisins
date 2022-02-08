@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -22,7 +23,7 @@ import java.util.List;
 public class NeigbourgDetails extends AppCompatActivity {
     TextView mNeigbourgName;
     ImageView mNeigbourgAvatar;
-    Button mNeigbourgFavoryButton;
+    ImageView mNeigbourgFavoryButton;
     private NeighbourApiService mApiService ;
     List<Neighbour> mNeighbours ;
     List<FavoriteNeighbours> mFavoryListe;
@@ -38,7 +39,7 @@ public class NeigbourgDetails extends AppCompatActivity {
 
          mApiService = DI.getNeighbourApiService();
          mNeighbours = mApiService.getNeighbours();
-        List<Neighbour>  mFavoryListe = new ArrayList<>();
+
 
 
         mNeigbourgName = findViewById(R.id.neigbourg_details_name_text);
@@ -47,7 +48,7 @@ public class NeigbourgDetails extends AppCompatActivity {
 
 
 
-        mNeigbourgName.setText("PRENOM : " + nameClicked);
+        mNeigbourgName.setText("Name : " + nameClicked);
 
 
         Glide.with(mNeigbourgAvatar.getContext())
@@ -58,24 +59,9 @@ public class NeigbourgDetails extends AppCompatActivity {
         mNeigbourgFavoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Neighbour Ab = mNeighbours.get(position);
-
-               // mFavoryListe.clear();
-
-                mFavoryListe.add(Ab);
-
-               Neighbour NeighbourAddToFavory = mFavoryListe.get(0);
-                //  Neighbour B = mFavoryListe.get(0);
-
-                mNeigbourgName.setText("Prenom Add to favory: " + NeighbourAddToFavory.getName() );
-
-              /*  Neighbour B = mFavoryListe.add(Ab.getId(),Ab.getName(),Ab.getAvatarUrl(),
-                        Ab.getAddress(),
-                        Ab.getPhoneNumber(),
-                        Ab.getAboutMe());*/
-               // mNeighbours.add(Ab);
-                //mFavoryListe.clear();
-
+                 mNeighbours.get(position).setFavory(true);
+                 String voisin = mNeighbours.get(position).getName();
+               Toast.makeText(NeigbourgDetails.this, voisin + " est ajouté au favories", Toast.LENGTH_SHORT).show();
 
             }
         });
