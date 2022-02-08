@@ -70,22 +70,24 @@ NeighbourFragment mFragment= new NeighbourFragment();
 
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder,
+                                 int position) {
 
         //if (mNeighbours !=null ) {
-       position= mPosition;
-            Neighbour neighbour = mNeighbours.get(position);
-            holder.mNeighbourName.setText(neighbour.getName());
-            Glide.with(holder.mNeighbourAvatar.getContext())
-                    .load(neighbour.getAvatarUrl())
-                    .apply(RequestOptions.circleCropTransform())
-                    .into(holder.mNeighbourAvatar);
-            Log.e("TAG, ","onBindViewHolder: Aucun = if");
-            //Click on a Item of Recyclerview
+        this.mPosition = position ;
+        Neighbour neighbour = mNeighbours.get(position);
+        holder.mNeighbourName.setText(neighbour.getName());
+        Glide.with(holder.mNeighbourAvatar.getContext())
+                .load(neighbour.getAvatarUrl())
+                .apply(RequestOptions.circleCropTransform())
+                .into(holder.mNeighbourAvatar);
+        Log.e("TAG, ","onBindViewHolder: Aucun = if");
+
+        //Click on a Item of Recyclerview
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActualNeighbourg= mNeighbours.get(mPosition);
+                // ActualNeighbourg= mNeighbours.get(mPosition);
 
                 String NameClicked = neighbour.getName();
                 String AvatarClicked = neighbour.getAvatarUrl();
@@ -95,48 +97,48 @@ NeighbourFragment mFragment= new NeighbourFragment();
 
                 Intent neigbourgDetailsIntent = new Intent(v.getContext(), NeigbourgDetails.class);
                 //  new Intent().setClass(this, MyDaughterActivity.class);
-                neigbourgDetailsIntent.putExtra("POSITION", mPosition);
+                neigbourgDetailsIntent.putExtra("POSITION", position);
                 neigbourgDetailsIntent.putExtra("NAME_CLICKED", NameClicked);
                 neigbourgDetailsIntent.putExtra("AVATAR_CLICKED", AvatarClicked);
-             v.getContext().startActivity(neigbourgDetailsIntent);
+                v.getContext().startActivity(neigbourgDetailsIntent);
 
             }
         });
 
-            holder.mDeleteButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                   // if( neighbour.isFavory()) {
+        holder.mDeleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // if( neighbour.isFavory()) {
 
-                    MyViewPager mPager = new MyViewPager();
-                       // mPager.getMp();
-                    //Log.e("TAG", "onClick: "+ mPager.getMp() );
+                MyViewPager mPager = new MyViewPager();
+                // mPager.getMp();
+                //Log.e("TAG", "onClick: "+ mPager.getMp() );
 
-                    ListNeighbourActivity listNeighbourActivity =new ListNeighbourActivity();
-                    int e= listNeighbourActivity.mPageSelected;
+                ListNeighbourActivity listNeighbourActivity =new ListNeighbourActivity();
+                int e= listNeighbourActivity.mPageSelected;
 
-                    int pagenub= e;
+                int pagenub= e;
 
-                    if( pagenub ==1) {
-                        EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour));
-                        Toast.makeText(v.getContext(),
-                                neighbour.getName() + " on est à 1 NEIGBOURS " + pagenub,
-                                Toast.LENGTH_SHORT).show();
-                        Log.e("TAG", "onClick: page "+pagenub );
+                if( pagenub ==1) {
+                    EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour));
+                    Toast.makeText(v.getContext(),
+                            neighbour.getName() + " on est à 1 NEIGBOURS " + pagenub,
+                            Toast.LENGTH_SHORT).show();
+                    Log.e("TAG", "onClick: page "+pagenub );
 
-                    }else{
-                       // neighbour.setFavory(false);
-                        Toast.makeText(v.getContext(),
-                                neighbour.getName() + " Veuillez supprimer dans MY NEIGBOURS  "
-                                        +pagenub,
-                                Toast.LENGTH_SHORT).show();
-                        Log.e("TAG", "onClick: page "+pagenub );
+                }else{
+                    // neighbour.setFavory(false);
+                    Toast.makeText(v.getContext(),
+                            neighbour.getName() + " Veuillez supprimer dans MY NEIGBOURS  "
+                                    +pagenub,
+                            Toast.LENGTH_SHORT).show();
+                    Log.e("TAG", "onClick: page "+pagenub );
 
-                    }
                 }
-            });
+            }
+        });
 
-        }
+    }
 
 
     @Override
