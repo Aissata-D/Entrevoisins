@@ -74,7 +74,7 @@ NeighbourFragment mFragment= new NeighbourFragment();
                                  int position) {
 
         //if (mNeighbours !=null ) {
-        this.mPosition = position ;
+        this.mPosition = holder.getAdapterPosition();
         Neighbour neighbour = mNeighbours.get(position);
         holder.mNeighbourName.setText(neighbour.getName());
         Glide.with(holder.mNeighbourAvatar.getContext())
@@ -88,7 +88,7 @@ NeighbourFragment mFragment= new NeighbourFragment();
             @Override
             public void onClick(View v) {
                 // ActualNeighbourg= mNeighbours.get(mPosition);
-
+                mPosition = holder.getAdapterPosition();
                 String NameClicked = neighbour.getName();
                 String AvatarClicked = neighbour.getAvatarUrl();
                 // mPosition = position;
@@ -97,7 +97,7 @@ NeighbourFragment mFragment= new NeighbourFragment();
 
                 Intent neigbourgDetailsIntent = new Intent(v.getContext(), NeigbourgDetails.class);
                 //  new Intent().setClass(this, MyDaughterActivity.class);
-                neigbourgDetailsIntent.putExtra("POSITION", position);
+                neigbourgDetailsIntent.putExtra("POSITION", mPosition);
                 neigbourgDetailsIntent.putExtra("NAME_CLICKED", NameClicked);
                 neigbourgDetailsIntent.putExtra("AVATAR_CLICKED", AvatarClicked);
                 v.getContext().startActivity(neigbourgDetailsIntent);
