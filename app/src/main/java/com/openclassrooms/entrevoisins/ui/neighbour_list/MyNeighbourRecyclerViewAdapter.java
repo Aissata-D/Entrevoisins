@@ -31,21 +31,16 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeighbourRecyclerViewAdapter.ViewHolder> implements ListNeighbourActivity.PageSelected {
+public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeighbourRecyclerViewAdapter.ViewHolder> {
 
     private final List<Neighbour> mNeighbours;
     //TODO Code Aissata
     //  private final List<Neighbour> mNeighboursFavory;
 
-NeighbourFragment mFragment= new NeighbourFragment();
-    FragmentManager fm;
-    ListNeighbourPagerAdapter adapter = new ListNeighbourPagerAdapter(fm);
-    private int mPagePosition;
-    int p;
-    private Neighbour ActualNeighbourg;
+
     private int mPosition;
-    private  NeighbourFragment NeighbourFragment = new NeighbourFragment();
-    private ListNeighbourActivity ListNeighbourActivity =new ListNeighbourActivity();
+    private NeighbourFragment NeighbourFragment = new NeighbourFragment();
+    private ListNeighbourActivity ListNeighbourActivity = new ListNeighbourActivity();
 
     //FIN
 
@@ -54,8 +49,6 @@ NeighbourFragment mFragment= new NeighbourFragment();
 
         mNeighbours = items;
     }
-
-
 
 
     @Override
@@ -68,12 +61,9 @@ NeighbourFragment mFragment= new NeighbourFragment();
     }
 
 
-
     @Override
-    public void onBindViewHolder(final ViewHolder holder,
-                                 int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
 
-        //if (mNeighbours !=null ) {
 
         Neighbour neighbour = mNeighbours.get(position);
         holder.mNeighbourName.setText(neighbour.getName());
@@ -81,13 +71,12 @@ NeighbourFragment mFragment= new NeighbourFragment();
                 .load(neighbour.getAvatarUrl())
                 .apply(RequestOptions.circleCropTransform())
                 .into(holder.mNeighbourAvatar);
-        Log.e("TAG, ","onBindViewHolder: Aucun = if");
+        Log.e("TAG, ", "onBindViewHolder: Aucun = if");
 
         //Click on a Item of Recyclerview
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // ActualNeighbourg= mNeighbours.get(mPosition);
                 mPosition = holder.getAdapterPosition();
                 String NameClicked = neighbour.getName();
                 String AvatarClicked = neighbour.getAvatarUrl();
@@ -96,7 +85,6 @@ NeighbourFragment mFragment= new NeighbourFragment();
                 Log.w("clicked", "onItemClicked: " + mPosition + " nom: " + neighbour.getName());
 
                 Intent neigbourgDetailsIntent = new Intent(v.getContext(), NeigbourgDetails.class);
-                //  new Intent().setClass(this, MyDaughterActivity.class);
                 neigbourgDetailsIntent.putExtra("POSITION", mPosition);
                 neigbourgDetailsIntent.putExtra("NAME_CLICKED", NameClicked);
                 neigbourgDetailsIntent.putExtra("AVATAR_CLICKED", AvatarClicked);
@@ -108,33 +96,9 @@ NeighbourFragment mFragment= new NeighbourFragment();
         holder.mDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // if( neighbour.isFavory()) {
 
-                MyViewPager mPager = new MyViewPager();
-                // mPager.getMp();
-                //Log.e("TAG", "onClick: "+ mPager.getMp() );
+                EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour));
 
-                ListNeighbourActivity listNeighbourActivity =new ListNeighbourActivity();
-                int e= listNeighbourActivity.mPageSelected;
-
-                int pagenub= e;
-
-                if( pagenub ==1) {
-                    EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour));
-                    Toast.makeText(v.getContext(),
-                            neighbour.getName() + " on est à 1 NEIGBOURS " + pagenub,
-                            Toast.LENGTH_SHORT).show();
-                    Log.e("TAG", "onClick: page "+pagenub );
-
-                }else{
-                    // neighbour.setFavory(false);
-                    Toast.makeText(v.getContext(),
-                            neighbour.getName() + " Veuillez supprimer dans MY NEIGBOURS  "
-                                    +pagenub,
-                            Toast.LENGTH_SHORT).show();
-                    Log.e("TAG", "onClick: page "+pagenub );
-
-                }
             }
         });
 
@@ -144,20 +108,7 @@ NeighbourFragment mFragment= new NeighbourFragment();
     @Override
     public int getItemCount() {
 
-    return mNeighbours.size();
-    }
-
-
-
-
-    @Override
-    public int getPageSelected(int a) {
-            p = a;
-        return a;
-    }
-    public int getP(){
-        Log.e("TAGA," ,"getPagePosition: " +p );
-        return p;
+        return mNeighbours.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -167,7 +118,6 @@ NeighbourFragment mFragment= new NeighbourFragment();
         public TextView mNeighbourName;
         @BindView(R.id.item_list_delete_button)
         public ImageButton mDeleteButton;
-
 
 
         public ViewHolder(View view) {

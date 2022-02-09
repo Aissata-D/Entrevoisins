@@ -18,7 +18,7 @@ import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.FavoriteNeighbours;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
-import com.openclassrooms.entrevoisins.utils.ItemClickSupport;
+
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -37,6 +37,7 @@ public class NeighbourFragment extends Fragment {
     private List<Neighbour> mNeighbours;
     private List<Neighbour> mFavoryListe;
     private RecyclerView mRecyclerView;
+    private RecyclerView mRecyclerView1;
     private ListNeighbourActivity listNeighbourActivity = new ListNeighbourActivity();
 
     //TODO Aissata
@@ -80,14 +81,15 @@ public class NeighbourFragment extends Fragment {
                              Bundle savedInstanceState) {
         //TODO Aissata
 
-        mcondition =getArguments().getInt("CONDITION", 0);
+        mcondition = getArguments().getInt("CONDITION", 0);
         //FIN
-        View view = inflater.inflate(R.layout.fragment_neighbour_list, container, false);
+        View view;
+        view = inflater.inflate(R.layout.fragment_neighbour_list, container, false);
+        //View view1 = inflater.inflate(R.layout.fragment_favory, container, false);
         Context context = view.getContext();
         mRecyclerView = (RecyclerView) view;
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
-
 
         return view;
     }
@@ -122,7 +124,7 @@ public class NeighbourFragment extends Fragment {
             }
 
 
-            mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mFavoryListe));
+            mRecyclerView.setAdapter(new FavoryRecyclerViewAdapter(mFavoryListe));
 
             Log.e("TAG", "initList:  case recyclerview 1 ");
         }

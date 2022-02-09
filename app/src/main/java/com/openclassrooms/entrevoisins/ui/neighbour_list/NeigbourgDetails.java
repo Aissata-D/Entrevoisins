@@ -19,14 +19,16 @@ import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Optional;
+
 
 public class NeigbourgDetails extends AppCompatActivity {
     TextView mNeigbourgName;
     ImageView mNeigbourgAvatar;
     ImageView mNeigbourgFavoryButton;
-    private NeighbourApiService mApiService ;
-    List<Neighbour> mNeighbours ;
+    List<Neighbour> mNeighbours;
     List<FavoriteNeighbours> mFavoryListe;
+    private NeighbourApiService mApiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,19 +39,14 @@ public class NeigbourgDetails extends AppCompatActivity {
         String nameClicked = bundle.getString("NAME_CLICKED");
         String avatarClicked = bundle.getString("AVATAR_CLICKED");
 
-         mApiService = DI.getNeighbourApiService();
-         mNeighbours = mApiService.getNeighbours();
-
-
+        mApiService = DI.getNeighbourApiService();
+        mNeighbours = mApiService.getNeighbours();
 
         mNeigbourgName = findViewById(R.id.neigbourg_details_name_text);
         mNeigbourgAvatar = findViewById(R.id.neigbourg_details_avatar);
         mNeigbourgFavoryButton = findViewById(R.id.neigbourg_details_favory_button);
 
-
-
         mNeigbourgName.setText("Name : " + nameClicked);
-
 
         Glide.with(mNeigbourgAvatar.getContext())
                 .load(avatarClicked)
@@ -57,11 +54,12 @@ public class NeigbourgDetails extends AppCompatActivity {
                 .into(mNeigbourgAvatar);
 
         mNeigbourgFavoryButton.setOnClickListener(new View.OnClickListener() {
+            @Optional
             @Override
             public void onClick(View v) {
-                 mNeighbours.get(position).setFavory(true);
-                 String voisin = mNeighbours.get(position).getName();
-               Toast.makeText(NeigbourgDetails.this, voisin + " est ajouté au favories", Toast.LENGTH_SHORT).show();
+                mNeighbours.get(position).setFavory(true);
+                String voisin = mNeighbours.get(position).getName();
+                Toast.makeText(NeigbourgDetails.this, voisin + " est ajouté au favories", Toast.LENGTH_SHORT).show();
 
             }
         });

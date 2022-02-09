@@ -8,7 +8,7 @@
 
 
     <ImageView
-        android:id="@+id/item_favory_avatar"
+        android:id="@+id/item_favory_avatare"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
@@ -22,12 +22,15 @@
         android:id="@+id/item_favory_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:text="Textview"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/item_list_avatar"
-        app:layout_constraintStart_toEndOf="@+id/item_list_avatar"
-        app:layout_constraintTop_toTopOf="@+id/item_list_avatar" />
 
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.107"
+        app:layout_constraintStart_toEndOf="@+id/item_favory_avatare"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.509" />
 
 
 </android.support.constraint.ConstraintLayout>
