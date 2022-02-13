@@ -41,6 +41,16 @@ public class AddNeighbourActivity extends AppCompatActivity {
     private NeighbourApiService mApiService;
     private String mNeighbourImage;
 
+    /**
+     * Used to navigate to this activity
+     *
+     * @param activity
+     */
+    public static void navigate(FragmentActivity activity) {
+        Intent intent = new Intent(activity, AddNeighbourActivity.class);
+        ActivityCompat.startActivity(activity, intent, null);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +64,7 @@ public class AddNeighbourActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case android.R.id.home : {
+            case android.R.id.home: {
                 finish();
                 return true;
             }
@@ -68,9 +78,13 @@ public class AddNeighbourActivity extends AppCompatActivity {
                 .apply(RequestOptions.circleCropTransform()).into(avatar);
         nameInput.getEditText().addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
             @Override
             public void afterTextChanged(Editable s) {
                 addButton.setEnabled(s.length() > 0);
@@ -95,18 +109,10 @@ public class AddNeighbourActivity extends AppCompatActivity {
 
     /**
      * Generate a random image. Useful to mock image picker
+     *
      * @return String
      */
     String randomImage() {
-        return "https://i.pravatar.cc/150?u="+ System.currentTimeMillis();
-    }
-
-    /**
-     * Used to navigate to this activity
-     * @param activity
-     */
-    public static void navigate(FragmentActivity activity) {
-        Intent intent = new Intent(activity, AddNeighbourActivity.class);
-        ActivityCompat.startActivity(activity, intent, null);
+        return "https://i.pravatar.cc/150?u=" + System.currentTimeMillis();
     }
 }

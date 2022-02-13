@@ -1,12 +1,7 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 import android.content.Intent;
-import android.media.Image;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,18 +10,15 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
-import com.openclassrooms.entrevoisins.model.FavoriteNeighbours;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -37,16 +29,12 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
     private final List<Neighbour> mNeighbours;
     //TODO Code Aissata
     //  private final List<Neighbour> mNeighboursFavory;
-
-
-    private int mPosition;
-
     boolean mIsFavorite;
+    private int mPosition;
     //FIN
 
     public MyNeighbourRecyclerViewAdapter(List<Neighbour> items, boolean isFavorite) {
-
-    mIsFavorite = isFavorite;
+        mIsFavorite = isFavorite;
         mNeighbours = items;
     }
 
@@ -55,8 +43,6 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_neighbour, parent, false);
-
-
         return new ViewHolder(view);
     }
 
@@ -67,18 +53,17 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         //Image image = new Image();
         Neighbour neighbour = mNeighbours.get(position);
         holder.mNeighbourName.setText(neighbour.getName());
-      //  holder.mNeighbourName.setBackground();
+        //  holder.mNeighbourName.setBackground();
         Glide.with(holder.mNeighbourAvatar.getContext())
                 .load(neighbour.getAvatarUrl())
                 .apply(RequestOptions.circleCropTransform())
                 .into(holder.mNeighbourAvatar);
         Log.e("TAG, ", "onBindViewHolder: Aucun = if");
-
         //Masquer le bouton delete de la list des favory
-        if(mIsFavorite){
+        if (mIsFavorite) {
             holder.mDeleteButton.setVisibility(View.GONE);// GONE ; VISIBLE; INVISIBLE
         }
-        if(!mIsFavorite) {
+        if (!mIsFavorite) {
             //Click on a Item of Recyclerview
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -90,7 +75,6 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
                     String PhoneClicked = neighbour.getPhoneNumber();
                     String AboutClicked = neighbour.getAboutMe();
                     // mPosition = position;
-
                     Log.w("clicked", "onItemClicked: " + mPosition + " nom: " + neighbour.getName());
 
                     Intent neigbourgDetailsIntent = new Intent(v.getContext(), NeigbourgDetails.class);
@@ -109,9 +93,7 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         holder.mDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour));
-
             }
         });
 
@@ -120,7 +102,6 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
 
     @Override
     public int getItemCount() {
-
         return mNeighbours.size();
     }
 
@@ -136,11 +117,7 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         public ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
-
-
         }
-
-
     }
 };
 

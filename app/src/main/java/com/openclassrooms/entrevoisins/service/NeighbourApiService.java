@@ -28,7 +28,7 @@ public interface NeighbourApiService {
      */
     void createNeighbour(Neighbour neighbour);
 
-    // ajouter les trois methode pour les favories
+    // ajout des trois methodes pour les favories
 
     List<Neighbour> getFavoryNeigbours();
     void removeFavoryNeighbour(Neighbour neighbour);

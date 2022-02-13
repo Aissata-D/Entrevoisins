@@ -21,10 +21,6 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
     public List<Neighbour> getNeighbours() {
         return neighbours;
     }
-   // if(isFavory )
-   // public List<Neighbour> getNeighboursFavory() {
-      //  return neighbours;
-    //}
 
     /**
      * {@inheritDoc}
@@ -53,7 +49,7 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
             if (neighbours.get(i).isFavory()) {
                 if (!(favoryNeighbours.contains(neighbours.get(i)))) {
                     favoryNeighbours.add(neighbours.get(i));
-                    //     favoryNeighbours.get(favoryNeighbours.size()-1).setId(id);
+                    //favoryNeighbours.get(favoryNeighbours.size()-1).setId(id);
 
                 }
             }else {favoryNeighbours.remove(neighbours.get(i));}
@@ -65,25 +61,19 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
                 }
             }
         }
-            return favoryNeighbours;
-
+        return favoryNeighbours;
     }
 
     @Override
     public void removeFavoryNeighbour(Neighbour favoryNeighbour) {
         favoryNeighbour.setFavory(false);
-       // favoryNeighbours.remove(favoryNeighbour);
       //  favoryNeighbours.remove(favoryNeighbour);
-
-
     }
 
     @Override
     public void addFavoryNeighbour(Neighbour favoryNeighbour) {
         favoryNeighbour.setFavory(true);
        // favoryNeighbours.add(favoryNeighbour);
-       // favoryNeighbours.add(favoryNeighbour);
-
     }
     // Implementer les trois methodes ajouté
     // Boucle

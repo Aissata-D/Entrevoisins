@@ -126,6 +126,7 @@ public class NeighboursListTest {
                     isDisplayed()))
                     .check(doesNotExist());
         }
+        
     }
     /* @Test
     public void myNeighboursFavory_display_only_favoryNeighbour() {

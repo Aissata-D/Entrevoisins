@@ -6,7 +6,7 @@ import java.util.Objects;
  * Model object representing a Neighbour
  */
 public class Neighbour {
-    // ADd boolean Favory
+    // Add boolean Favory
    private boolean isFavory = false;
 
     /** Identifier */
