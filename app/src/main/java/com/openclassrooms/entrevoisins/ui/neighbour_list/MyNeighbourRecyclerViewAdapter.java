@@ -1,6 +1,7 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 import android.content.Intent;
+import android.media.Image;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
@@ -39,14 +40,13 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
 
 
     private int mPosition;
-    private NeighbourFragment NeighbourFragment = new NeighbourFragment();
-    private ListNeighbourActivity ListNeighbourActivity = new ListNeighbourActivity();
 
+    boolean mIsFavorite;
     //FIN
 
-    public MyNeighbourRecyclerViewAdapter(List<Neighbour> items) {
+    public MyNeighbourRecyclerViewAdapter(List<Neighbour> items, boolean isFavorite) {
 
-
+    mIsFavorite = isFavorite;
         mNeighbours = items;
     }
 
@@ -64,34 +64,47 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
-
+        //Image image = new Image();
         Neighbour neighbour = mNeighbours.get(position);
         holder.mNeighbourName.setText(neighbour.getName());
+      //  holder.mNeighbourName.setBackground();
         Glide.with(holder.mNeighbourAvatar.getContext())
                 .load(neighbour.getAvatarUrl())
                 .apply(RequestOptions.circleCropTransform())
                 .into(holder.mNeighbourAvatar);
         Log.e("TAG, ", "onBindViewHolder: Aucun = if");
 
-        //Click on a Item of Recyclerview
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPosition = holder.getAdapterPosition();
-                String NameClicked = neighbour.getName();
-                String AvatarClicked = neighbour.getAvatarUrl();
-                // mPosition = position;
+        //Masquer le bouton delete de la list des favory
+        if(mIsFavorite){
+            holder.mDeleteButton.setVisibility(View.GONE);// GONE ; VISIBLE; INVISIBLE
+        }
+        if(!mIsFavorite) {
+            //Click on a Item of Recyclerview
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mPosition = holder.getAdapterPosition();
+                    String NameClicked = neighbour.getName();
+                    String AvatarClicked = neighbour.getAvatarUrl();
+                    String AdressClicked = neighbour.getAddress();
+                    String PhoneClicked = neighbour.getPhoneNumber();
+                    String AboutClicked = neighbour.getAboutMe();
+                    // mPosition = position;
 
-                Log.w("clicked", "onItemClicked: " + mPosition + " nom: " + neighbour.getName());
+                    Log.w("clicked", "onItemClicked: " + mPosition + " nom: " + neighbour.getName());
 
-                Intent neigbourgDetailsIntent = new Intent(v.getContext(), NeigbourgDetails.class);
-                neigbourgDetailsIntent.putExtra("POSITION", mPosition);
-                neigbourgDetailsIntent.putExtra("NAME_CLICKED", NameClicked);
-                neigbourgDetailsIntent.putExtra("AVATAR_CLICKED", AvatarClicked);
-                v.getContext().startActivity(neigbourgDetailsIntent);
+                    Intent neigbourgDetailsIntent = new Intent(v.getContext(), NeigbourgDetails.class);
+                    neigbourgDetailsIntent.putExtra("POSITION", mPosition);
+                    neigbourgDetailsIntent.putExtra("NAME_CLICKED", NameClicked);
+                    neigbourgDetailsIntent.putExtra("AVATAR_CLICKED", AvatarClicked);
+                    neigbourgDetailsIntent.putExtra("ADRESSE_CLICKED", AdressClicked);
+                    neigbourgDetailsIntent.putExtra("PHONE_CLICKED", PhoneClicked);
+                    neigbourgDetailsIntent.putExtra("ABOUT_CLICKED", AboutClicked);
+                    v.getContext().startActivity(neigbourgDetailsIntent);
 
-            }
-        });
+                }
+            });
+        }
 
         holder.mDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override

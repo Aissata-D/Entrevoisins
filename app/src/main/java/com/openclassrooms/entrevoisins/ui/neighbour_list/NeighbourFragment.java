@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
+import com.openclassrooms.entrevoisins.events.AddNeighbourEvent;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.FavoriteNeighbours;
 import com.openclassrooms.entrevoisins.model.Neighbour;
@@ -42,7 +43,7 @@ public class NeighbourFragment extends Fragment {
 
     //TODO Aissata
 
-   int mcondition;
+    int mcondition;
 
 
     //FIN
@@ -59,7 +60,7 @@ public class NeighbourFragment extends Fragment {
         bundle.putInt("CONDITION", condition);
         fragment.setArguments(bundle);
 
-     //  mcondition = condition;
+        //  mcondition = condition;
         //FIN
         return fragment;
     }
@@ -72,7 +73,7 @@ public class NeighbourFragment extends Fragment {
 
         //TODO Aissata
 
-        mcondition =getArguments().getInt("CONDITION", 0);
+        mcondition = getArguments().getInt("CONDITION", 0);
         //FIN
     }
 
@@ -99,44 +100,44 @@ public class NeighbourFragment extends Fragment {
      */
     //TODO Aissate faire un affichage conditionnel de la liste du recycler view//
     private void initList() {
-
+        boolean isFavorite = (mcondition ==1);
 // TODO differencier les instancce des listes
         mNeighbours = mApiService.getNeighbours();
-        mFavoryListe =  new ArrayList<>();
+        mFavoryListe = mApiService.getFavoryNeigbours();
+        //mFavoryListe= new ArrayList<>();
 
 
-        if(mcondition== 0) {
+        if (!isFavorite) {
 
-            mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours));
+            mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours,isFavorite));
 
             Log.e("TAG", "initList:  case recyclerview 0 ");
 
-        }
-
-            else if(mcondition == 1) {
+        } else   {
             // mFavoriteNeighbours.add(mNeighbours.get(2));
 
-            for ( int i = 0; i < mNeighbours.size(); i++){
-                if (mNeighbours.get(i).isFavory()){
-                    mFavoryListe.add(mNeighbours.get(i));
-                }
+        /*   for (int i = 0; i < mNeighbours.size(); i++) {
+               Neighbour neighbourClicked =mNeighbours.get(i);
+               if(!mFavoryListe.contains(neighbourClicked)){
+                   if (neighbourClicked.isFavory()) {
+                       mFavoryListe.add(neighbourClicked);
+                   }
 
-            }
+               }
 
 
-            mRecyclerView.setAdapter(new FavoryRecyclerViewAdapter(mFavoryListe));
+            }*/
+
+            mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mFavoryListe,isFavorite));
 
             Log.e("TAG", "initList:  case recyclerview 1 ");
         }
-           else{
-
-                Log.e("TAG", "initList:  No RECYCLERVIEW ");
-        }
     }
-public int getCondition(){
-    Log.e("TAG", "getCondition: condition: " + mcondition );
+
+    public int getCondition() {
+        Log.e("TAG", "getCondition: condition: " + mcondition);
         return mcondition;
-}
+    }
 
 
     @Override
@@ -148,8 +149,10 @@ public int getCondition(){
     @Override
     public void onResume() {
         super.onResume();
+
         initList();
-        Log.e("TAG", "onResume: ONRESUME " );
+
+        Log.e("TAG", "onResume: ONRESUME ");
         getCondition();
     }
 
@@ -157,7 +160,7 @@ public int getCondition(){
     public void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
-        Log.e("TAG", "onStart:  ONSTART" );
+        Log.e("TAG", "onStart:  ONSTART");
         getCondition();
     }
 
@@ -175,15 +178,28 @@ public int getCondition(){
 
     @Subscribe
     public void onDeleteNeighbour(DeleteNeighbourEvent event) {
-        if(mcondition ==0) {
+        //if (mcondition == 0) {
             mApiService.deleteNeighbour(event.neighbour);
 
             initList();
-        }
+        //}
+    }
+
+    /**
+     * Fired if the user clicks on a delete button
+     *
+     * @param event2
+     */
+    @Subscribe
+    public void AddNeighbour(AddNeighbourEvent event2) {
+        //if (mcondition == 0) {
+        mApiService.addFavoryNeighbour(event2.neighbour);
+
+        initList();
+        //}
     }
 
     //TODO Aissata
-
 
 
 }

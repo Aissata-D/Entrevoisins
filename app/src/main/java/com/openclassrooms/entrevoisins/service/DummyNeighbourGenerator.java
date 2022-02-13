@@ -38,4 +38,17 @@ public abstract class DummyNeighbourGenerator {
     static List<Neighbour> generateNeighbours() {
         return new ArrayList<>(DUMMY_NEIGHBOURS);
     }
+    // Generator List FavoryGenerator
+   /* static List<Neighbour> generateFavoryNeighbour() {
+        List<Neighbour> favoryNeigbours = new ArrayList<>();
+
+        for (int i = 0; i < DUMMY_NEIGHBOURS.size(); i++) {
+            if (DUMMY_NEIGHBOURS.get(i).isFavory()) {
+                favoryNeigbours.add(DUMMY_NEIGHBOURS.get(i));
+            }
+        }
+
+        return new ArrayList<>(favoryNeigbours);
+    }*/
 }
+

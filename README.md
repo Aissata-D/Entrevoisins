@@ -1,8 +1,15 @@
-# OpenClassrooms
+# OpenClassrooms_Nom du projet
 
 Ce dépôt contient une mini-application pour le P3 du parcours **Grande École du Numérique**.
-Instruction pour lancer le projet
-Télécharger la dernière version d’Andoid Studio
-Lors de son installation, permettre l’installation des émulateur de téléphone Android.
-Cloner le projet en faisant puis l’ouvrir dans Android Studio
-Créer un émulateur virtuel puis cliquer sur Le bouton RUN dans Android Studio 
+
+## Instruction pour lancer le projet
+1- Télécharger la dernière version d’Andoid Studio
+2- Cloner le projet en faisant puis 
+3-l’ouvrir dans Android Studio
+4- Créer un émulateur virtuel puis 
+5- cliquer sur Le bouton RUN dans Android Studio 
+
+## Lancer lest tests
+Test unitaire
+Test instrumenté
+

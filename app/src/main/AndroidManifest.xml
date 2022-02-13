@@ -11,8 +11,17 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".ui.neighbour_list.NeigbourgDetails"></activity>
+        android:theme="@style/AppTheme"
+        >
+        <activity
+            android:name=".ui.neighbour_list.NeigbourgDetails"
+            android:label="NeibourgDetails"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".ui.neighbour_list.ListNeighbourActivity"
+
+            />
+
+
         <activity
             android:name=".ui.neighbour_list.AddNeighbourActivity"
             android:label="@string/activity_new_neighbour" />
