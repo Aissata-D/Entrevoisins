@@ -63,32 +63,25 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         if (mIsFavorite) {
             holder.mDeleteButton.setVisibility(View.GONE);// GONE ; VISIBLE; INVISIBLE
         }
-        if (!mIsFavorite) {
-            //Click on a Item of Recyclerview
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mPosition = holder.getAdapterPosition();
-                    String NameClicked = neighbour.getName();
-                    String AvatarClicked = neighbour.getAvatarUrl();
-                    String AdressClicked = neighbour.getAddress();
-                    String PhoneClicked = neighbour.getPhoneNumber();
-                    String AboutClicked = neighbour.getAboutMe();
-                    // mPosition = position;
-                    Log.w("clicked", "onItemClicked: " + mPosition + " nom: " + neighbour.getName());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPosition = holder.getAdapterPosition();
 
-                    Intent neigbourgDetailsIntent = new Intent(v.getContext(), NeigbourgDetails.class);
-                    neigbourgDetailsIntent.putExtra("POSITION", mPosition);
-                    neigbourgDetailsIntent.putExtra("NAME_CLICKED", NameClicked);
-                    neigbourgDetailsIntent.putExtra("AVATAR_CLICKED", AvatarClicked);
-                    neigbourgDetailsIntent.putExtra("ADRESSE_CLICKED", AdressClicked);
-                    neigbourgDetailsIntent.putExtra("PHONE_CLICKED", PhoneClicked);
-                    neigbourgDetailsIntent.putExtra("ABOUT_CLICKED", AboutClicked);
-                    v.getContext().startActivity(neigbourgDetailsIntent);
+                // mPosition = position;
+                Log.w("clicked", "onItemClicked: " + mPosition + " nom: " + neighbour.getName());
 
-                }
-            });
-        }
+                Intent neigbourgDetailsIntent = new Intent(v.getContext(), NeigbourgDetails.class);
+                neigbourgDetailsIntent.putExtra("POSITION", mPosition);
+                neigbourgDetailsIntent.putExtra("IS_FAVORITE", mIsFavorite);
+               /* neigbourgDetailsIntent.putExtra("AVATAR_CLICKED", AvatarClicked);
+                neigbourgDetailsIntent.putExtra("ADRESSE_CLICKED", AdressClicked);
+                neigbourgDetailsIntent.putExtra("PHONE_CLICKED", PhoneClicked);
+                neigbourgDetailsIntent.putExtra("ABOUT_CLICKED", AboutClicked);*/
+                v.getContext().startActivity(neigbourgDetailsIntent);
+
+            }
+        });
 
         holder.mDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -11,7 +11,7 @@ import java.util.List;
 public class DummyNeighbourApiService implements  NeighbourApiService {
 
     private List<Neighbour> neighbours = DummyNeighbourGenerator.generateNeighbours();
-    private List<Neighbour> favoryNeighbours = new ArrayList<>();
+
 
 
     /**
@@ -43,22 +43,10 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
 
     @Override
     public List<Neighbour> getFavoryNeigbours() {
-        long id;
-        for (int i = 0; i < neighbours.size(); i++) {
-            id = neighbours.get(i).getId();
-            if (neighbours.get(i).isFavory()) {
-                if (!(favoryNeighbours.contains(neighbours.get(i)))) {
-                    favoryNeighbours.add(neighbours.get(i));
-                    //favoryNeighbours.get(favoryNeighbours.size()-1).setId(id);
-
-                }
-            }else {favoryNeighbours.remove(neighbours.get(i));}
-            // Enlever des favories les Neighbour supprimé de  la liste Neighbours
-            for (int j = 0; j < favoryNeighbours.size(); j++) {
-
-                if (!neighbours.contains(favoryNeighbours.get(j))) {
-                    favoryNeighbours.remove(favoryNeighbours.get(j));
-                }
+        List<Neighbour> favoryNeighbours = new ArrayList<>();
+        for (Neighbour n: neighbours) {
+            if (n.isFavory()) {
+                favoryNeighbours.add(n);
             }
         }
         return favoryNeighbours;
@@ -67,17 +55,17 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
     @Override
     public void removeFavoryNeighbour(Neighbour favoryNeighbour) {
         favoryNeighbour.setFavory(false);
-      //  favoryNeighbours.remove(favoryNeighbour);
+        //  favoryNeighbours.remove(favoryNeighbour);
     }
 
     @Override
     public void addFavoryNeighbour(Neighbour favoryNeighbour) {
         favoryNeighbour.setFavory(true);
-       // favoryNeighbours.add(favoryNeighbour);
+        // favoryNeighbours.add(favoryNeighbour);
     }
     // Implementer les trois methodes ajouté
     // Boucle
-  //  void createNeighbourFavorite(Neighbour neighbour){neighbours.get(neighbour)}
+    //  void createNeighbourFavorite(Neighbour neighbour){neighbours.get(neighbour)}
    /* @Override
     public void addFavoriteNeighbour(Neighbour neighbour) {
         for(Neighbour n:neighbours){

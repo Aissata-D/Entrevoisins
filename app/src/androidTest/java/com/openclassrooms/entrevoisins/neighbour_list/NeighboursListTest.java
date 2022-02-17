@@ -88,6 +88,7 @@ public class NeighboursListTest {
         // NeighbourDetail sreen is display
         onView(ViewMatchers.withId(R.id.neigbourg_details_main))
                 .check(matches(isDisplayed()));
+
     }
 
     @Test
@@ -102,55 +103,52 @@ public class NeighboursListTest {
     }
 
     @Test
-    public void myNeighboursFavory_display_only_favoryNeighbour_for_all_neighbour() {
+    public void myNeighboursFavoryList_display_only_favoryNeighbours() {
         List<Neighbour> NeighbourList = DI.getNeighbourApiService().getNeighbours();
-        int halfSize = (NeighbourList.size()) / 2;
-        //On ajoute la moitié des voisins à la liste favory
-        for (int i = 0; i < halfSize; i++) {
-            onView(allOf(ViewMatchers.withId(R.id.list_neighbours), isDisplayed()))
-                    .perform(RecyclerViewActions.actionOnItemAtPosition(i, click()));
-            //Clic on floating button
-            onView(allOf(ViewMatchers.withId(R.id.neigbourg_details_favory_button), isDisplayed()))
-                    .perform(click());
-            pressBack();
-        }
-        onView(withId(R.id.container)).perform(swipeLeft());
 
-        for (int i = 0; i < halfSize; i++) {
-            onView(allOf(ViewMatchers.withId(R.id.item_list_name), withText(NeighbourList.get(i).getName()),
-                    isDisplayed()))
-                    .check(matches(withText(NeighbourList.get(i).getName())));
-        }
-        for (int i = halfSize; i < NeighbourList.size(); i++) {
-            onView(allOf(ViewMatchers.withId(R.id.item_list_name), withText(NeighbourList.get(i).getName()),
-                    isDisplayed()))
-                    .check(doesNotExist());
-        }
-        
-    }
-    /* @Test
-    public void myNeighboursFavory_display_only_favoryNeighbour() {
-        List<Neighbour> NeighbourList = DI.getNeighbourApiService().getNeighbours();
-        Neighbour neighbour = DI.getNeighbourApiService().getNeighbours().get(2);
-        //On ajoute le voisins à la position 2 à la liste favory
+        //On ajoute les deux premiers à la liste favory
 
+        // On ajoute le premier voisin à la liste favorie
         onView(allOf(ViewMatchers.withId(R.id.list_neighbours), isDisplayed()))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(2, click()));
+                .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         //Clic on floating button
         onView(allOf(ViewMatchers.withId(R.id.neigbourg_details_favory_button), isDisplayed()))
                 .perform(click());
+        //On retourne à la liste voisin
         pressBack();
-        //On bascule sur le view Favory
+
+        // On ajoute le deuxieme voisin à la liste favorie
+        onView(allOf(ViewMatchers.withId(R.id.list_neighbours), isDisplayed()))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(1, click()));
+        //Clic on floating button
+        onView(allOf(ViewMatchers.withId(R.id.neigbourg_details_favory_button), isDisplayed()))
+                .perform(click());
+        //On retourne à la liste voisin
+        pressBack();
+
+        // On bascule sur la liste favorie
         onView(withId(R.id.container)).perform(swipeLeft());
-        //On verie que la liste favory contient le voisin à la position 2
-        onView(allOf(ViewMatchers.withId(R.id.item_list_name), withText("Chloé"),
+        // Verifier que la liste contient 2 elements
+        onView(allOf(ViewMatchers.withId(R.id.list_neighbours),
+                isDisplayed())).check(withItemCount(2));
+        //Puis verivier que les deux noms sont bien sur favori
+
+        onView(allOf(ViewMatchers.withId(R.id.item_list_name), withText(NeighbourList.get(0).getName()),
                 isDisplayed()))
-                .check(matches(withText(neighbour.getName())));
-        //On verie que la liste favory ne contient pas le voisin à la position 3
-        onView(allOf(ViewMatchers.withId(R.id.item_list_name), withText("Vincent"),
+                .check(matches(withText(NeighbourList.get(0).getName())));
+
+        onView(allOf(ViewMatchers.withId(R.id.item_list_name), withText(NeighbourList.get(1).getName()),
+                isDisplayed()))
+                .check(matches(withText(NeighbourList.get(1).getName())));
+
+
+        // verifier que le troisieme n'existe voisin n'est pas sur la liste des favories
+
+        onView(allOf(ViewMatchers.withId(R.id.item_list_name), withText(NeighbourList.get(2).getName()),
                 isDisplayed()))
                 .check(doesNotExist());
-    }*/
 
+
+    }
 
 }

@@ -4,6 +4,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,9 +26,10 @@ public class NeigbourgDetails extends AppCompatActivity {
     FloatingActionButton mNeigbourgFavoryButton;
     ImageView mNeigbourgAvatar;
     List<Neighbour> mNeighbours;
-    List<Neighbour> mFavoryListe;
+
+    Neighbour mNeighbour;
     private TextView mNeigbourgNameFolat;
-    private FloatingActionButton mNeigbourgNameFolatBack;
+    private ImageButton mNeigbourgNameButtonBack;
     private NeighbourApiService mApiService;
 
 
@@ -37,15 +39,16 @@ public class NeigbourgDetails extends AppCompatActivity {
         setContentView(R.layout.activity_neigbourg_details);
         Bundle bundle = getIntent().getExtras();
         int position = bundle.getInt("POSITION");
-        String nameClicked = bundle.getString("NAME_CLICKED");
+        boolean isFavorite = bundle.getBoolean("IS_FAVORITE");
+       /* String nameClicked = bundle.getString("IS_FAVORITE");
         String avatarClicked = bundle.getString("AVATAR_CLICKED");
         String adresseClicked = bundle.getString("ADRESSE_CLICKED");
         String phoneClicked = bundle.getString("PHONE_CLICKED");
-        String aboutClicked = bundle.getString("ABOUT_CLICKED");
+        String aboutClicked = bundle.getString("ABOUT_CLICKED");*/
 
         mApiService = DI.getNeighbourApiService();
-        mNeighbours = mApiService.getNeighbours();
-        mFavoryListe = mApiService.getFavoryNeigbours();
+        mNeighbours = isFavorite? mApiService.getFavoryNeigbours(): mApiService.getNeighbours();
+        mNeighbour = mNeighbours.get(position);
 
         mNeigbourgName = findViewById(R.id.neigbourg_details_name_text);
         mNeigbourgAvatar = findViewById(R.id.neigbourg_details_avatar);
@@ -54,18 +57,18 @@ public class NeigbourgDetails extends AppCompatActivity {
         mNeigbourgSocialMedia = findViewById(R.id.neigbourg_details_name_text_social_media);
         mNeigbourgAbout = findViewById(R.id.neigbourg_details_name_about_description);
         mNeigbourgNameFolat = findViewById(R.id.neigbourg_details_name_text_float);
-        mNeigbourgNameFolatBack = findViewById(R.id.neigbourg_details_favory_button_back);
+        mNeigbourgNameButtonBack = findViewById(R.id.neigbourg_details_favory_button_back);
         mNeigbourgFavoryButton = findViewById(R.id.neigbourg_details_favory_button);
 
-        mNeigbourgName.setText(nameClicked);
-        mNeigbourgNameFolat.setText(nameClicked);
-        mNeigbourgAdresse.setText(adresseClicked);
-        mNeigbourgPhone.setText(phoneClicked);
-        mNeigbourgSocialMedia.setText("www.facebook.fr/" + nameClicked.toLowerCase());
-        mNeigbourgAbout.setText(aboutClicked);
+        mNeigbourgName.setText(mNeighbour.getName());
+        mNeigbourgNameFolat.setText(mNeighbour.getName());
+        mNeigbourgAdresse.setText(mNeighbour.getAddress());
+        mNeigbourgPhone.setText(mNeighbour.getPhoneNumber());
+        mNeigbourgSocialMedia.setText("www.facebook.fr/" + mNeighbour.getName().toLowerCase());
+        mNeigbourgAbout.setText(mNeighbour.getAboutMe());
 
         Glide.with(mNeigbourgAvatar.getContext())
-                .load(avatarClicked)
+                .load(mNeighbour.getAvatarUrl())
                 .centerCrop()
                 .into(mNeigbourgAvatar);
 
@@ -85,7 +88,8 @@ public class NeigbourgDetails extends AppCompatActivity {
             public void onClick(View v) {
                 Neighbour favory = mNeighbours.get(position);
 
-                if ((!mFavoryListe.contains(favory)) && !favory.isFavory()) {
+                //if ((!mFavoryListe.contains(favory)) && !favory.isFavory())
+                if(!favory.isFavory()){
                     mApiService.addFavoryNeighbour(favory); // ajouter le voisin à Favory
                     // changer la couleur du bouton
                     mNeigbourgFavoryButton.setImageResource(R.drawable.ic_baseline_star_24_yellow);
@@ -95,12 +99,12 @@ public class NeigbourgDetails extends AppCompatActivity {
                     mNeigbourgFavoryButton.setImageResource(R.drawable.ic_baseline_star_rate_24_gris);
 
                     mApiService.removeFavoryNeighbour(favory);// Elever le voisin à Favory
-                    mFavoryListe = mApiService.getFavoryNeigbours();
+                    // mFavoryListe = mApiService.getFavoryNeigbours();
                 }
             }
         });
 
-        mNeigbourgNameFolatBack.setOnClickListener(new View.OnClickListener() {
+        mNeigbourgNameButtonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Retour à l'element precedent

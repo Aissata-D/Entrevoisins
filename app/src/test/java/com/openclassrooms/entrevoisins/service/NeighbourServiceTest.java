@@ -12,6 +12,7 @@ import org.junit.runners.JUnit4;
 import java.util.List;
 
 import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 
@@ -60,21 +61,32 @@ public class NeighbourServiceTest {
     @Test
     public  void getFavoryNeighbourWithSucces(){
         Neighbour neighbour = service.getNeighbours().get(0);
-        neighbour.setFavory(true);
+        // Ajout à la liste favorite
+        service.addFavoryNeighbour(neighbour);
+        // verifie que la taille de liste favorite est de 1
+        assertEquals(1,service.getFavoryNeigbours().size());
+        // verifie que la taille de liste favorite contient neighbour
         assertTrue(service.getFavoryNeigbours().contains(neighbour));
     }
     @Test
     public void removeFavoryNeighbourWithSucces() {
         Neighbour neighbour = service.getNeighbours().get(0);
-        neighbour.setFavory(true);
+        service.addFavoryNeighbour(neighbour);
+        // verifie que la taille de liste favorite est de 1
+        assertEquals(1,service.getFavoryNeigbours().size());
         service.removeFavoryNeighbour(neighbour);
+        // verifie que la taille de liste favorite est de 0
+        assertEquals(0,service.getFavoryNeigbours().size());
+        // verifie que la liste favorite ne contient pas neighbour
         assertFalse(service.getFavoryNeigbours().contains(neighbour));
     }
     @Test
     public void addFavoryNeighbourWithSucces() {
         Neighbour neighbour = service.getNeighbours().get(0);
-        neighbour.setFavory(false);
         service.addFavoryNeighbour(neighbour);
+        // verifie que la taille de liste favorite est de 1
+        assertEquals(1,service.getFavoryNeigbours().size());
+        // verifie que la liste favorite  contient neighbour
         assertTrue(service.getFavoryNeigbours().contains(neighbour));
 
     }
