@@ -9,7 +9,7 @@ Ce dépôt contient une mini-application pour le P3 du parcours **Grande École 
 4- Créer un émulateur virtuel puis 
 5- cliquer sur Le bouton RUN dans Android Studio 
 
-## Lancer lest tests
+## Lancer les tests
 Test unitaire
 Test instrumenté
 
