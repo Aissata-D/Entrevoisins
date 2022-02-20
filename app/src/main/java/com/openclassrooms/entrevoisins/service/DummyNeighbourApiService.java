@@ -8,11 +8,9 @@ import java.util.List;
 /**
  * Dummy mock for the Api
  */
-public class DummyNeighbourApiService implements  NeighbourApiService {
+public class DummyNeighbourApiService implements NeighbourApiService {
 
     private List<Neighbour> neighbours = DummyNeighbourGenerator.generateNeighbours();
-
-
 
     /**
      * {@inheritDoc}
@@ -32,6 +30,7 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
 
     /**
      * {@inheritDoc}
+     *
      * @param neighbour
      */
     @Override
@@ -39,12 +38,12 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
         neighbours.add(neighbour);
     }
 
-    // Methode FavoryNeighbour
+    // Methodes FavoryNeighbour
 
     @Override
     public List<Neighbour> getFavoryNeigbours() {
         List<Neighbour> favoryNeighbours = new ArrayList<>();
-        for (Neighbour n: neighbours) {
+        for (Neighbour n : neighbours) {
             if (n.isFavory()) {
                 favoryNeighbours.add(n);
             }
@@ -55,23 +54,10 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
     @Override
     public void removeFavoryNeighbour(Neighbour favoryNeighbour) {
         favoryNeighbour.setFavory(false);
-        //  favoryNeighbours.remove(favoryNeighbour);
     }
 
     @Override
     public void addFavoryNeighbour(Neighbour favoryNeighbour) {
         favoryNeighbour.setFavory(true);
-        // favoryNeighbours.add(favoryNeighbour);
     }
-    // Implementer les trois methodes ajouté
-    // Boucle
-    //  void createNeighbourFavorite(Neighbour neighbour){neighbours.get(neighbour)}
-   /* @Override
-    public void addFavoriteNeighbour(Neighbour neighbour) {
-        for(Neighbour n:neighbours){
-            if(n.equals(neighbour)){
-                n.setIsFavorite(true);
-            }
-        }
-    }*/
 }

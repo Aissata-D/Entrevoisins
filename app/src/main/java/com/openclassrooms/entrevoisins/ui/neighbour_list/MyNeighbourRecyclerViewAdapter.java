@@ -1,7 +1,6 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 import android.content.Intent;
-
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,17 +26,13 @@ import butterknife.ButterKnife;
 public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeighbourRecyclerViewAdapter.ViewHolder> {
 
     private final List<Neighbour> mNeighbours;
-    //TODO Code Aissata
-    //  private final List<Neighbour> mNeighboursFavory;
     boolean mIsFavorite;
     private int mPosition;
-    //FIN
 
     public MyNeighbourRecyclerViewAdapter(List<Neighbour> items, boolean isFavorite) {
         mIsFavorite = isFavorite;
         mNeighbours = items;
     }
-
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -58,7 +53,6 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
                 .load(neighbour.getAvatarUrl())
                 .apply(RequestOptions.circleCropTransform())
                 .into(holder.mNeighbourAvatar);
-        Log.e("TAG, ", "onBindViewHolder: Aucun = if");
         //Masquer le bouton delete de la list des favory
         if (mIsFavorite) {
             holder.mDeleteButton.setVisibility(View.GONE);// GONE ; VISIBLE; INVISIBLE
@@ -67,19 +61,10 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
             @Override
             public void onClick(View v) {
                 mPosition = holder.getAdapterPosition();
-
-                // mPosition = position;
-                Log.w("clicked", "onItemClicked: " + mPosition + " nom: " + neighbour.getName());
-
-                Intent neigbourgDetailsIntent = new Intent(v.getContext(), NeigbourgDetails.class);
+                Intent neigbourgDetailsIntent = new Intent(v.getContext(), NeigbourgDetailsActivity.class);
                 neigbourgDetailsIntent.putExtra("POSITION", mPosition);
                 neigbourgDetailsIntent.putExtra("IS_FAVORITE", mIsFavorite);
-               /* neigbourgDetailsIntent.putExtra("AVATAR_CLICKED", AvatarClicked);
-                neigbourgDetailsIntent.putExtra("ADRESSE_CLICKED", AdressClicked);
-                neigbourgDetailsIntent.putExtra("PHONE_CLICKED", PhoneClicked);
-                neigbourgDetailsIntent.putExtra("ABOUT_CLICKED", AboutClicked);*/
                 v.getContext().startActivity(neigbourgDetailsIntent);
-
             }
         });
 
@@ -89,9 +74,7 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
                 EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour));
             }
         });
-
     }
-
 
     @Override
     public int getItemCount() {
@@ -105,7 +88,6 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         public TextView mNeighbourName;
         @BindView(R.id.item_list_delete_button)
         public ImageButton mDeleteButton;
-
 
         public ViewHolder(View view) {
             super(view);

@@ -5,9 +5,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-
 import com.openclassrooms.entrevoisins.R;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -23,7 +21,6 @@ public class ListNeighbourActivity extends AppCompatActivity  {
     ViewPager mViewPager;
 
     ListNeighbourPagerAdapter mPagerAdapter;
-public int mPageSelected;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

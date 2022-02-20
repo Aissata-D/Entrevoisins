@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme"
         >
         <activity
-            android:name=".ui.neighbour_list.NeigbourgDetails"
+            android:name=".ui.neighbour_list.NeigbourgDetailsActivity"
             android:label="NeibourgDetails"
             android:theme="@style/AppTheme.NoActionBar"
             android:parentActivityName=".ui.neighbour_list.ListNeighbourActivity"

@@ -6,7 +6,6 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-
     <ImageView
         android:id="@+id/item_list_avatar"
         android:layout_width="50dp"

@@ -17,7 +17,7 @@ import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 import java.util.List;
 
 
-public class NeigbourgDetails extends AppCompatActivity {
+public class NeigbourgDetailsActivity extends AppCompatActivity {
     TextView mNeigbourgName;
     TextView mNeigbourgAdresse;
     TextView mNeigbourgPhone;
@@ -40,14 +40,9 @@ public class NeigbourgDetails extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         int position = bundle.getInt("POSITION");
         boolean isFavorite = bundle.getBoolean("IS_FAVORITE");
-       /* String nameClicked = bundle.getString("IS_FAVORITE");
-        String avatarClicked = bundle.getString("AVATAR_CLICKED");
-        String adresseClicked = bundle.getString("ADRESSE_CLICKED");
-        String phoneClicked = bundle.getString("PHONE_CLICKED");
-        String aboutClicked = bundle.getString("ABOUT_CLICKED");*/
 
         mApiService = DI.getNeighbourApiService();
-        mNeighbours = isFavorite? mApiService.getFavoryNeigbours(): mApiService.getNeighbours();
+        mNeighbours = isFavorite ? mApiService.getFavoryNeigbours() : mApiService.getNeighbours();
         mNeighbour = mNeighbours.get(position);
 
         mNeigbourgName = findViewById(R.id.neigbourg_details_name_text);
@@ -89,7 +84,7 @@ public class NeigbourgDetails extends AppCompatActivity {
                 Neighbour favory = mNeighbours.get(position);
 
                 //if ((!mFavoryListe.contains(favory)) && !favory.isFavory())
-                if(!favory.isFavory()){
+                if (!favory.isFavory()) {
                     mApiService.addFavoryNeighbour(favory); // ajouter le voisin à Favory
                     // changer la couleur du bouton
                     mNeigbourgFavoryButton.setImageResource(R.drawable.ic_baseline_star_24_yellow);
@@ -112,6 +107,5 @@ public class NeigbourgDetails extends AppCompatActivity {
             }
         });
     }
-
 
 }

@@ -30,9 +30,7 @@ public class NeighbourFragment extends Fragment {
     private List<Neighbour> mFavoryListe;
     private RecyclerView mRecyclerView;
 
-    //TODO Aissata
     private ListNeighbourActivity listNeighbourActivity = new ListNeighbourActivity();
-    //FIN
 
     /**
      * Create and return a new instance
@@ -41,11 +39,9 @@ public class NeighbourFragment extends Fragment {
      */
     public static NeighbourFragment newInstance(int condition) {
         NeighbourFragment fragment = new NeighbourFragment();
-//TODO AISSATA
         Bundle bundle = new Bundle();
         bundle.putInt("CONDITION", condition);
         fragment.setArguments(bundle);
-        //FIN
         return fragment;
     }
 
@@ -53,53 +49,33 @@ public class NeighbourFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mApiService = DI.getNeighbourApiService();
-
-        //TODO Aissata
         mCondition = getArguments().getInt("CONDITION", 0);
-        //FIN
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        //TODO Aissata
 
         mCondition = getArguments().getInt("CONDITION", 0);
-        //FIN
         View view;
         view = inflater.inflate(R.layout.fragment_neighbour_list, container, false);
         Context context = view.getContext();
         mRecyclerView = (RecyclerView) view;
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
-
         return view;
     }
 
     /**
      * Init the List of neighbours
      */
-    //TODO Aissate faire un affichage conditionnel de la liste du recycler view//
     private void initList() {
         boolean isFavorite = (mCondition == 1);
-// TODO differencier les instancce des listes
         mNeighbours = mApiService.getNeighbours();
         mFavoryListe = mApiService.getFavoryNeigbours();
-
         if (!isFavorite) {
-
             mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours, isFavorite));
         } else {
-            //add FavoitesNeighbour
-        /*   for (int i = 0; i < mNeighbours.size(); i++) {
-               Neighbour neighbourClicked =mNeighbours.get(i);
-               if(!mFavoryListe.contains(neighbourClicked)){
-                   if (neighbourClicked.isFavory()) {
-                       mFavoryListe.add(neighbourClicked);
-                   }
-               }
-            }*/
-
             mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mFavoryListe, isFavorite));
         }
     }
@@ -133,23 +109,6 @@ public class NeighbourFragment extends Fragment {
         mApiService.deleteNeighbour(event.neighbour);
         initList();
     }
-    //TODO Aissata
-    /*  /**
-     * Fired if the user clicks on a delete button
-     *
-     * @param event2
-     */
-   /* @Subscribe
-    public void AddNeighbour(AddNeighbourEvent event2) {
-        //if (mcondition == 0) {
-        mApiService.addFavoryNeighbour(event2.neighbour);
-
-        initList();
-        //}
-    }
-
-
-*/
 
 }
 
